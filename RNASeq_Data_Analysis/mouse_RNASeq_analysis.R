@@ -89,6 +89,18 @@ EnhancedVolcano(toptable = wdlps_v_fat,
                 drawConnectors = T, labSize = 3,
                 title = 'WDLPS vs. Normal Fat', subtitle = NULL)
 
+### REMOVE LABELS FROM VOLCANO PLOT & MOVE LEGEND
+EnhancedVolcano(toptable = wdlps_v_fat,
+                lab = NA,
+                x = 'log2FoldChange',
+                y = 'padj',
+                FCcutoff = 1,
+                pCutoff = 0.05,
+                drawConnectors = T,
+                legendPosition = "right",
+                title = 'WDLPS vs. Normal Fat', subtitle = NULL) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
 # > GSEA ------------------------------------------------------------------
 
 wdlps_v_fat_rank <- wdlps_v_fat %>%
@@ -133,6 +145,46 @@ EnhancedVolcano(toptable = ddlps_v_fat,
                 pCutoff = 0.05,
                 drawConnectors = T, labSize = 3,
                 title = 'DDLPS vs. Normal Fat', subtitle = NULL)
+
+
+### REMOVE LABELS FROM VOLCANO PLOT & MOVE LEGEND
+EnhancedVolcano(toptable = ddlps_v_fat,
+                lab = NA,
+                x = 'log2FoldChange',
+                y = 'padj',
+                FCcutoff = 1,
+                pCutoff = 0.05,
+                drawConnectors = T,
+                legendPosition = "right",
+                title = 'DDLPS vs. Normal Fat', subtitle = NULL) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+### CHANGE VP TO ONLY HIGHLIGHTED GENES 
+goi = c('Cdk4', 'Cdk6', 'Cebpa', 'Mdm2', 'Hmga2')
+gl = ifelse(ddlps_v_fat$gene_symbol %in% goi, 'cyan', 'black')
+
+GOI.VP = EnhancedVolcano(toptable = ddlps_v_fat,
+               lab = ddlps_v_fat$gene_symbol,
+               selectLab = c('Cdk4', 'Cdk6', 'Cebpa', 'Mdm2', 'Hmga2'),
+               x = 'log2FoldChange',
+               y = 'padj',
+               FCcutoff = 1,
+               pCutoff = 0.05,
+               drawConnectors = T, labSize = 4,
+               boxedLabels = T, legendPosition = "right",
+               labFace = "bold",
+               arrowheads = FALSE, widthConnectors = 1.25,
+               directionConnectors = "both", colConnectors = "black",
+               title = 'DDLPS vs. Normal Fat', subtitle = NULL) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+GOI.VP + geom_point(data = ddlps_v_fat[ddlps_v_fat$gene_symbol %in% goi, ], 
+                    aes(x = log2FoldChange, y = -log10(padj)), 
+                    color = "cyan", size = 2.5, shape = 1, stroke = 2)
+
+with(ddlps_v_fat[ddlps_v_fat$gene_symbol %in% goi, ],
+                 points(log2FoldChange, -log10(padj), cex = 2, lwd = 2, col = 'black', pch = 1))
 
 # > GSEA ------------------------------------------------------------------
 
