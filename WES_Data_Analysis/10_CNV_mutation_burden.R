@@ -88,3 +88,29 @@ ggplot(percent_altered, aes(x = sample_id, y = percent_altered, fill = condition
   xlab("") + ylab("% Genome Altered") +
   labs(fill = "Grade") +
   coord_flip()
+
+### CREATE COMPARISONS FOR STAT_COMPARE_MEANS()
+TEST.CNV = list(c("DDLPS (Low TILs)", "WDLPS (Low TILs)"), c("DDLPS (High TILs)", "DDLPS (Low TILs)"), c("DDLPS (High TILs)", "WDLPS (Low TILs)"))
+
+ggplot(percent_altered, aes(x = condition, y = percent_altered)) +
+  geom_boxplot() +
+  geom_point() +
+  xlab("") + ylab("% Genome Altered") +
+  theme_bw()
+
+### STATISTICS BOXPLOT FOR % GENOME ALTERED
+ggplot(percent_altered, aes(x = condition, y = percent_altered)) + geom_boxplot(alpha = 0.8, fill = c("red", "dodgerblue", "blue3")) +
+  stat_summary(fun = mean) + 
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1), geom = "errorbar", width = 0.3) +
+  geom_point() + stat_compare_means(comparisons = TEST.CNV, label =  "p.signif") + theme_minimal() +
+  labs(x = "", y = "% Genome Altered") + theme(axis.text.x = element_text(face="bold", size = 11.5), axis.title.y = element_text(face="bold", size = 12))
+
+### CHANGING FIGURE AESTHETICS
+ggplot(percent_altered, aes(x = sample_id, y = percent_altered, fill = condition)) +
+  geom_bar(stat = 'identity') +
+  xlab("") + ylab("% Genome Altered") +
+  labs(fill = "Grade") +
+  coord_flip() + theme_minimal() + scale_fill_manual(values = c("red", "dodgerblue", "blue3")) + 
+  theme(axis.title.x = element_text(face = "bold", size = 11.5, vjust = -1), 
+        axis.text.y = element_text(face = "bold", size = 11.5, color = "black"), 
+        legend.title = element_text(face = "bold"), legend.text = element_text(face = "bold", size = 9.25))
