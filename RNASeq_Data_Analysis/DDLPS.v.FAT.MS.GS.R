@@ -85,10 +85,10 @@ library(nichenetr)
 # MOUSE DDLPS v FAT GENE SIGNATURE --> HUMAN DDLPS & NF -------------------
 
 ### LOADING DATA 
-mouse_wdlps_v_fat_dge = read.csv("outputs/mouse_wdlps_v_fat_dge.csv")
+#mouse_wdlps_v_fat_dge = read.csv("outputs/mouse_wdlps_v_fat_dge.csv")
 mouse_ddlps_v_fat_dge = read.csv("outputs/mouse_ddlps_v_fat_dge.csv")
-human_wdlps_v_fat_dge = read.csv("outputs/human_wdlps_v_fat_dge.csv")
-human_ddlps_v_fat_dge = read.csv("outputs/human_ddlps_v_fat_dge.csv")
+#human_wdlps_v_fat_dge = read.csv("outputs/human_wdlps_v_fat_dge.csv")
+#human_ddlps_v_fat_dge = read.csv("outputs/human_ddlps_v_fat_dge.csv")
 
 
 ### MS DDLPS GENE SIGNATURE - CONVERT MS GENE SYMBOLS TO HUMAN TO USE ON HUMAN SAMPLES
